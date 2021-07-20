@@ -1,48 +1,52 @@
 import math
 from calc import Calculator
-
-def testCalculator(a, b):
-    c = Calculator()
-    print('_____________________\nTest for nums', a, b)
-    print('Sum: ', c.sum(a, b), "and", a + b)
-    print('Sub: ', c.sub(a, b), 'and', a - b)
-    print('Mult: ', c.mult(a, b), 'and', a * b)
-    try:
-        print('Div: ', c.div(a, b), 'and', a / b)
-    except ValueError as e:
-        print('Div:', e.args[0])
-    try:
-        print('Mod: ', c.mod(a, b), 'and', math.modf(a))
-    except ValueError as e:
-        print('Mod:', e.args[0])
-    print('Pow: ', c.power(a, b), 'and', math.pow(a, b))
-    try:
-        print('Sqrt: ', c.squareRoot(a), 'and', math.sqrt(a))
-    except ValueError as e:
-        print('Sqrt:', e.args[0])
-    try:
-        print('Log: ', c.logarithm(a, b), 'and', math.log(a, b))
-    except ValueError as e:
-        print('Log:', e.args[0])
-    try:
-        print('Sin: ', c.sine(a), 'and', math.sin(a))
-    except ValueError as e:
-        print('Sin:', e.args[0])
-    
-
-def runTests():
-    testCalculator(-1, 3)
-    testCalculator(0, 0)
-    testCalculator(5, -2)
-    testCalculator(6, 0)
-    testCalculator(6, 6)
-    testCalculator(6, 6)
-    testCalculator(30, 6)
+from tests import *
 
 def promptCalculator():
     c = Calculator()
-    operation = input('Enter the operation:\n0 - add\n1 - subtract\n2 - multiply\n3 - divide\n4 - find modulo\n5 - raise in power\n6 - find square root\n7 - find logarithm\n8 - find sine of angle(in degrees)')
+    while True:
+        try:
+            operation = int(input('''
+Use the following operations:
+0 - Addition
+1 - Subtraction
+2 - Multiplication
+3 - Division
+4 - Modulo
+5 - Raising in power
+6 - Square root
+7 - Logarithm
+8 - Sine of angle(in degrees)
+9 - Cosine of angle(in degrees)
+10 - Tangent of angle(in degrees)
+Enter the operation: '''))
+            print('')
+            if (0 > operation or operation > 10):
+                raise Exception
+        except Exception:
+            print('Enter valid operation number..\n')
+            continue
+        try:
+            if (operation in (6, 8, 9, 10)):
+                a = float(input('Enter the value: '))
+                c.operations[operation](a)
+            else:
+                a = float(input('Enter the 1 value: '))
+                b = float(input('Enter the 2 value: '))
+                c.operations[operation](a, b)
+        except Exception as e:
+            print(e.args[0], '\n')
+        finally:
+            ret = input('continue? y/n: ')
+            if ret == 'y':
+                continue
+            else:
+                break
+def start():
     try:
-        c.operations[operation]
-    except:
-        pass
+        promptCalculator()
+    except KeyboardInterrupt:
+        print('\nExited')
+
+if __name__ == '__main__':
+    start()
