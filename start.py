@@ -2,6 +2,7 @@ import math
 from calc import Calculator
 from tests import *
 
+
 def promptCalculator():
     c = Calculator()
     while True:
@@ -21,13 +22,13 @@ Use the following operations:
 10 - Tangent of angle(in degrees)
 Enter the operation: '''))
             print('')
-            if (0 > operation or operation > 10):
+            if 0 > operation or operation > 10:
                 raise Exception
         except Exception:
             print('Enter valid operation number..\n')
             continue
         try:
-            if (operation in (6, 8, 9, 10)):
+            if operation in (6, 8, 9, 10):
                 a = float(input('Enter the value: '))
                 c.operations[operation](a)
             else:
@@ -39,14 +40,17 @@ Enter the operation: '''))
         finally:
             ret = input('continue? y/n: ')
             if ret == 'y':
-                continue
+                pass
             else:
                 break
+
+
 def start():
     try:
         promptCalculator()
     except KeyboardInterrupt:
         print('\nExited')
+
 
 if __name__ == '__main__':
     start()
